@@ -183,22 +183,6 @@
 </head>
 <body>
 
-<!-- SCREEN: SETUP (first-time only) -->
-<div id="screen-setup" class="screen">
-  <div class="setup-box">
-    <div class="setup-icon">⚙️</div>
-    <h2 class="setup-title">One-time setup</h2>
-    <p class="setup-sub">This app needs a connection to your Google Sheet. This only needs to be done once — ever.</p>
-    <div class="setup-steps">
-      <div class="setup-step"><div class="step-num">1</div><div class="step-text">Open your <strong>Google Apps Script</strong> project and deploy it as a Web App</div></div>
-      <div class="setup-step"><div class="step-num">2</div><div class="step-text">Copy the <strong>Web App URL</strong> (looks like <code style="color:var(--accent);font-size:11px">https://script.google.com/macros/s/…/exec</code>)</div></div>
-      <div class="setup-step"><div class="step-num">3</div><div class="step-text">Paste it below and tap <strong>Connect</strong></div></div>
-    </div>
-    <input type="text" id="api-url-input" placeholder="https://script.google.com/macros/s/…/exec" style="margin-bottom:12px">
-    <button class="submit-btn" onclick="saveApiUrl()">Connect →</button>
-  </div>
-</div>
-
 <!-- SCREEN: WELCOME -->
 <div id="screen-welcome" class="screen">
   <div class="logo-circle">🔥</div>
@@ -209,7 +193,6 @@
   </p>
   <p class="section-label">Who are you?</p>
   <div class="name-grid" id="welcome-names"></div>
-  <p class="reset-link" onclick="resetApiUrl()">Reset connection</p>
 </div>
 
 <!-- SCREEN: HOME -->
@@ -290,37 +273,14 @@
 <script>
 var MEMBERS = ['Ben', 'David', 'Guillaume', 'Pablo', 'Jules', 'Hans', 'Thomas'];
 var COLORS = { 'Ben':'#6366f1','David':'#ec4899','Guillaume':'#f59e0b','Pablo':'#10b981','Jules':'#3b82f6','Hans':'#ef4444','Thomas':'#8b5cf6' };
-var state = { currentUser: null, submittedTo: [], selectedTarget: null, apiUrl: null };
+var API_URL = 'https://script.google.com/macros/s/AKfycbxqxFKQfjvLfSqhDiGwZml73-cO47UvC3oN9DddWM2R75r-8opO6uop3xzf_25SzJ5Huw/exec';
+var state = { currentUser: null, submittedTo: [], selectedTarget: null, apiUrl: API_URL };
 
 // ── INIT ──
 window.onload = function() {
-  var savedUrl = localStorage.getItem('mc_api_url');
-  if (savedUrl) {
-    state.apiUrl = savedUrl;
-    buildWelcomeScreen();
-    showScreen('screen-welcome');
-  } else {
-    showScreen('screen-setup');
-  }
-};
-
-// ── SETUP ──
-function saveApiUrl() {
-  var url = document.getElementById('api-url-input').value.trim();
-  if (!url || !url.includes('script.google.com')) {
-    showToast('Please paste a valid Apps Script URL');
-    return;
-  }
-  localStorage.setItem('mc_api_url', url);
-  state.apiUrl = url;
   buildWelcomeScreen();
   showScreen('screen-welcome');
-}
-
-function resetApiUrl() {
-  localStorage.removeItem('mc_api_url');
-  showScreen('screen-setup');
-}
+};
 
 // ── API ──
 function api(params) {
