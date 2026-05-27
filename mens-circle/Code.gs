@@ -4,7 +4,7 @@
 // =============================================
 
 var SHEET_NAME = 'Feedback';
-var MEMBERS = ['Ben', 'David', 'Guillaume', 'Pablo', 'Jules', 'Hans', 'Thomas'];
+var MEMBERS = ['Ben', 'David', 'Giom', 'Pablo', 'Jules', 'Hans', 'Thomas'];
 
 // Handle all GET requests (used as REST API by the frontend)
 function doGet(e) {
