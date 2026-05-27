@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Men's Circle</title>
+<style>
+  :root {
+    --bg: #0d0d14;
+    --surface: #16161f;
+    --surface2: #1e1e2a;
+    --border: #2a2a3a;
+    --accent: #f0a500;
+    --accent2: #e07b00;
+    --text: #f0f0f5;
+    --muted: #7a7a95;
+    --success: #4ade80;
+    --danger: #f87171;
+    --radius: 14px;
+    --radius-sm: 8px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  .screen { display: none; flex-direction: column; min-height: 100vh; padding: 24px 20px; animation: fadeIn 0.3s ease; }
+  .screen.active { display: flex; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  .topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; }
+  .back-btn {
+    background: var(--surface2); border: 1px solid var(--border);
+    color: var(--muted); border-radius: var(--radius-sm);
+    padding: 8px 14px; cursor: pointer; font-size: 14px; transition: all 0.2s;
+  }
+  .back-btn:hover { color: var(--text); border-color: var(--accent); }
+  .screen-title { font-size: 17px; font-weight: 600; }
+
+  /* WELCOME */
+  #screen-welcome { align-items: center; justify-content: center; text-align: center; padding-top: 60px; }
+  .logo-circle {
+    width: 80px; height: 80px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 36px; margin: 0 auto 24px;
+    box-shadow: 0 0 40px rgba(240,165,0,0.25);
+  }
+  .welcome-title { font-size: 28px; font-weight: 700; margin-bottom: 10px; }
+  .welcome-sub { font-size: 15px; color: var(--muted); line-height: 1.6; max-width: 300px; margin: 0 auto 40px; }
+  .welcome-sub span { color: var(--accent); font-weight: 500; }
+  .section-label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 14px; }
+
+  /* SETUP */
+  #screen-setup { align-items: center; justify-content: center; padding-top: 40px; }
+  .setup-box { width: 100%; max-width: 380px; }
+  .setup-icon { font-size: 48px; text-align: center; margin-bottom: 20px; }
+  .setup-title { font-size: 22px; font-weight: 700; margin-bottom: 10px; text-align: center; }
+  .setup-sub { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 28px; text-align: center; }
+  .setup-sub a { color: var(--accent); }
+  .setup-steps { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; margin-bottom: 20px; }
+  .setup-step { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 12px; }
+  .setup-step:last-child { margin-bottom: 0; }
+  .step-num { width: 22px; height: 22px; border-radius: 50%; background: rgba(240,165,0,0.15); color: var(--accent); font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .step-text { font-size: 13px; color: var(--muted); line-height: 1.5; }
+  .step-text strong { color: var(--text); }
+
+  /* NAME GRID */
+  .name-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; width: 100%; max-width: 380px; margin: 0 auto; }
+  .name-card {
+    background: var(--surface); border: 1.5px solid var(--border);
+    border-radius: var(--radius); padding: 16px 12px;
+    display: flex; align-items: center; gap: 12px;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .name-card:hover, .name-card:active { border-color: var(--accent); background: var(--surface2); transform: translateY(-2px); }
+  .avatar { width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700; color: #fff; flex-shrink: 0; }
+  .name-card .name { font-size: 15px; font-weight: 600; }
+
+  /* PROGRESS */
+  .progress-container { margin-bottom: 24px; }
+  .progress-label { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-bottom: 8px; }
+  .progress-label span:last-child { color: var(--accent); font-weight: 600; }
+  .progress-bar { height: 5px; background: var(--surface2); border-radius: 999px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); border-radius: 999px; transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+
+  /* MEMBER CARDS */
+  .member-grid { display: flex; flex-direction: column; gap: 10px; }
+  .member-card { background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 16px; display: flex; align-items: center; gap: 14px; cursor: pointer; transition: all 0.2s; }
+  .member-card:hover { border-color: var(--accent); background: var(--surface2); }
+  .member-card.done { border-color: rgba(74,222,128,0.3); opacity: 0.7; cursor: default; }
+  .member-card.done:hover { transform: none; border-color: rgba(74,222,128,0.3); background: var(--surface); }
+  .member-info { flex: 1; }
+  .member-name { font-size: 16px; font-weight: 600; margin-bottom: 3px; }
+  .member-status { font-size: 12px; color: var(--muted); }
+  .member-status.done-text { color: var(--success); }
+  .done-badge { background: rgba(74,222,128,0.12); border: 1px solid rgba(74,222,128,0.3); color: var(--success); border-radius: 999px; font-size: 11px; font-weight: 600; padding: 4px 10px; }
+  .chevron { color: var(--accent); font-size: 18px; }
+
+  /* TABS */
+  .tab-bar { display: flex; background: var(--surface2); border-radius: var(--radius-sm); padding: 4px; gap: 4px; margin-bottom: 24px; }
+  .tab { flex: 1; padding: 9px; text-align: center; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; color: var(--muted); transition: all 0.2s; }
+  .tab.active { background: var(--surface); color: var(--text); }
+
+  /* FORM */
+  .form-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding: 16px; background: var(--surface2); border-radius: var(--radius); border: 1px solid var(--border); }
+  .form-header-name { font-size: 20px; font-weight: 700; }
+  .form-header-sub { font-size: 13px; color: var(--muted); margin-top: 2px; }
+  .questions { display: flex; flex-direction: column; gap: 20px; }
+  .question-label { font-size: 13px; font-weight: 600; color: var(--accent); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+  .q-num { width: 20px; height: 20px; border-radius: 50%; background: rgba(240,165,0,0.15); color: var(--accent); font-size: 11px; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0; }
+  .question-text { font-size: 15px; font-weight: 500; margin-bottom: 10px; line-height: 1.4; }
+  .char-hint { font-size: 11px; color: var(--muted); margin-top: 5px; }
+
+  textarea, input[type="text"] {
+    width: 100%; background: var(--surface2); border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm); color: var(--text); font-size: 15px;
+    font-family: inherit; padding: 12px 14px; resize: none; outline: none;
+    transition: border-color 0.2s; -webkit-appearance: none;
+  }
+  textarea:focus, input[type="text"]:focus { border-color: var(--accent); }
+  textarea { min-height: 90px; line-height: 1.5; }
+  input[type="text"] { height: 48px; }
+
+  .submit-btn {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #000; border: none; border-radius: var(--radius);
+    padding: 16px; font-size: 16px; font-weight: 700;
+    cursor: pointer; width: 100%; margin-top: 8px;
+    transition: all 0.2s;
+  }
+  .submit-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+  .submit-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+  /* SUCCESS */
+  #screen-success { align-items: center; justify-content: center; text-align: center; }
+  .success-icon {
+    width: 90px; height: 90px; border-radius: 50%;
+    background: rgba(74,222,128,0.12); border: 2px solid rgba(74,222,128,0.4);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 44px; margin: 0 auto 28px;
+    animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  @keyframes popIn { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  .success-title { font-size: 26px; font-weight: 700; margin-bottom: 10px; }
+  .success-sub { font-size: 15px; color: var(--muted); margin-bottom: 36px; line-height: 1.6; max-width: 280px; }
+  .streak-box { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 20px; text-align: center; margin-bottom: 28px; width: 100%; max-width: 320px; }
+  .streak-number { font-size: 36px; font-weight: 800; color: var(--accent); }
+  .streak-label { font-size: 13px; color: var(--muted); margin-top: 2px; }
+  .secondary-btn { background: var(--surface2); border: 1.5px solid var(--border); color: var(--text); border-radius: var(--radius); padding: 14px 24px; font-size: 15px; font-weight: 600; cursor: pointer; width: 100%; max-width: 320px; transition: all 0.2s; }
+  .secondary-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* FEEDBACK VIEWER */
+  .feedback-cards { display: flex; flex-direction: column; gap: 16px; }
+  .feedback-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  .feedback-from { background: var(--surface2); padding: 12px 16px; font-size: 12px; color: var(--muted); font-weight: 600; letter-spacing: 0.05em; display: flex; align-items: center; gap: 8px; }
+  .feedback-entries { padding: 14px 16px; display: flex; flex-direction: column; gap: 12px; }
+  .feedback-entry-label { font-size: 11px; color: var(--accent); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 3px; }
+  .feedback-entry-text { font-size: 14px; line-height: 1.55; }
+  .empty-state { text-align: center; padding: 48px 20px; color: var(--muted); font-size: 15px; line-height: 1.6; }
+  .empty-icon { font-size: 40px; margin-bottom: 12px; }
+
+  /* LOADING */
+  .loading-dots { display: flex; gap: 6px; justify-content: center; padding: 48px 0; }
+  .loading-dots span { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: bounce 1.2s infinite ease-in-out; }
+  .loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+  .loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes bounce { 0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; } 40% { transform: scale(1); opacity: 1; } }
+
+  /* TOAST */
+  .toast { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 20px; font-size: 14px; font-weight: 500; z-index: 999; transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); white-space: nowrap; }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  .user-chip { background: rgba(240,165,0,0.12); border: 1px solid rgba(240,165,0,0.3); color: var(--accent); border-radius: 999px; font-size: 12px; font-weight: 600; padding: 4px 12px; }
+  .reset-link { font-size: 11px; color: var(--muted); text-align: center; margin-top: 16px; cursor: pointer; text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<!-- SCREEN: SETUP (first-time only) -->
+<div id="screen-setup" class="screen">
+  <div class="setup-box">
+    <div class="setup-icon">⚙️</div>
+    <h2 class="setup-title">One-time setup</h2>
+    <p class="setup-sub">This app needs a connection to your Google Sheet. This only needs to be done once — ever.</p>
+    <div class="setup-steps">
+      <div class="setup-step"><div class="step-num">1</div><div class="step-text">Open your <strong>Google Apps Script</strong> project and deploy it as a Web App</div></div>
+      <div class="setup-step"><div class="step-num">2</div><div class="step-text">Copy the <strong>Web App URL</strong> (looks like <code style="color:var(--accent);font-size:11px">https://script.google.com/macros/s/…/exec</code>)</div></div>
+      <div class="setup-step"><div class="step-num">3</div><div class="step-text">Paste it below and tap <strong>Connect</strong></div></div>
+    </div>
+    <input type="text" id="api-url-input" placeholder="https://script.google.com/macros/s/…/exec" style="margin-bottom:12px">
+    <button class="submit-btn" onclick="saveApiUrl()">Connect →</button>
+  </div>
+</div>
+
+<!-- SCREEN: WELCOME -->
+<div id="screen-welcome" class="screen">
+  <div class="logo-circle">🔥</div>
+  <h1 class="welcome-title">Men's Circle</h1>
+  <p class="welcome-sub">
+    Give honest, caring feedback to the men you show up with each month.<br><br>
+    <span>Your words help each other grow.</span>
+  </p>
+  <p class="section-label">Who are you?</p>
+  <div class="name-grid" id="welcome-names"></div>
+  <p class="reset-link" onclick="resetApiUrl()">Reset connection</p>
+</div>
+
+<!-- SCREEN: HOME -->
+<div id="screen-home" class="screen">
+  <div class="topbar">
+    <div class="screen-title">Give Feedback</div>
+    <div id="home-user-chip" class="user-chip"></div>
+  </div>
+  <div class="tab-bar">
+    <div class="tab active" id="tab-give" onclick="switchTab('give')">Give Feedback</div>
+    <div class="tab" id="tab-receive" onclick="switchTab('receive')">My Feedback</div>
+  </div>
+  <div id="pane-give">
+    <div class="progress-container">
+      <div class="progress-label"><span>Progress this month</span><span id="progress-text">0 / 6</span></div>
+      <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="member-grid" id="member-list"></div>
+  </div>
+  <div id="pane-receive" style="display:none">
+    <div class="loading-dots"><span></span><span></span><span></span></div>
+    <div id="receive-content" style="display:none"></div>
+  </div>
+</div>
+
+<!-- SCREEN: FORM -->
+<div id="screen-form" class="screen">
+  <div class="topbar">
+    <button class="back-btn" onclick="goBack()">← Back</button>
+    <div class="screen-title" id="form-title">Feedback</div>
+  </div>
+  <div class="form-header" id="form-header"></div>
+  <div class="questions">
+    <div class="question-block">
+      <div class="question-label"><span class="q-num">1</span> Appreciation</div>
+      <div class="question-text" id="q1-text"></div>
+      <textarea id="q1" placeholder="What specifically stands out…" maxlength="400"></textarea>
+      <div class="char-hint">Be specific — the more concrete, the more it lands.</div>
+    </div>
+    <div class="question-block">
+      <div class="question-label"><span class="q-num">2</span> Growth Edge</div>
+      <div class="question-text" id="q2-text"></div>
+      <textarea id="q2" placeholder="Something you've noticed that could be worked on…" maxlength="400"></textarea>
+      <div class="char-hint">Say it with care. This is a gift, not a judgement.</div>
+    </div>
+    <div class="question-block">
+      <div class="question-label"><span class="q-num">3</span> One Word</div>
+      <div class="question-text" id="q3-text"></div>
+      <input type="text" id="q3" placeholder="e.g. Grounded, Curious, Bold…" maxlength="30">
+    </div>
+    <div class="question-block">
+      <div class="question-label"><span class="q-num">4</span> Challenge</div>
+      <div class="question-text" id="q4-text"></div>
+      <textarea id="q4" placeholder="An invitation, a dare, a nudge…" maxlength="300"></textarea>
+    </div>
+  </div>
+  <div style="height:24px"></div>
+  <button class="submit-btn" id="submit-btn" onclick="submitForm()">Send Feedback 🔥</button>
+  <div style="height:32px"></div>
+</div>
+
+<!-- SCREEN: SUCCESS -->
+<div id="screen-success" class="screen">
+  <div class="success-icon">✓</div>
+  <h2 class="success-title">Feedback Sent!</h2>
+  <p class="success-sub" id="success-sub"></p>
+  <div class="streak-box">
+    <div class="streak-number" id="streak-num">0</div>
+    <div class="streak-label">men given feedback this month</div>
+  </div>
+  <button class="submit-btn" style="max-width:320px" onclick="goHome()">Continue</button>
+  <div style="height:12px"></div>
+  <button class="secondary-btn" onclick="goWelcome()">Switch Member</button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var MEMBERS = ['Ben', 'David', 'Guillaume', 'Pablo', 'Jules', 'Hans', 'Thomas'];
+var COLORS = { 'Ben':'#6366f1','David':'#ec4899','Guillaume':'#f59e0b','Pablo':'#10b981','Jules':'#3b82f6','Hans':'#ef4444','Thomas':'#8b5cf6' };
+var state = { currentUser: null, submittedTo: [], selectedTarget: null, apiUrl: null };
+
+// ── INIT ──
+window.onload = function() {
+  var savedUrl = localStorage.getItem('mc_api_url');
+  if (savedUrl) {
+    state.apiUrl = savedUrl;
+    buildWelcomeScreen();
+    showScreen('screen-welcome');
+  } else {
+    showScreen('screen-setup');
+  }
+};
+
+// ── SETUP ──
+function saveApiUrl() {
+  var url = document.getElementById('api-url-input').value.trim();
+  if (!url || !url.includes('script.google.com')) {
+    showToast('Please paste a valid Apps Script URL');
+    return;
+  }
+  localStorage.setItem('mc_api_url', url);
+  state.apiUrl = url;
+  buildWelcomeScreen();
+  showScreen('screen-welcome');
+}
+
+function resetApiUrl() {
+  localStorage.removeItem('mc_api_url');
+  showScreen('screen-setup');
+}
+
+// ── API ──
+function api(params) {
+  var url = state.apiUrl + '?' + new URLSearchParams(params).toString();
+  return fetch(url).then(function(r) { return r.json(); });
+}
+
+// ── WELCOME ──
+function buildWelcomeScreen() {
+  var grid = document.getElementById('welcome-names');
+  grid.innerHTML = '';
+  MEMBERS.forEach(function(name) {
+    var card = document.createElement('div');
+    card.className = 'name-card';
+    card.innerHTML = '<div class="avatar" style="background:' + COLORS[name] + '">' + name[0] + '</div><span class="name">' + name + '</span>';
+    card.onclick = function() { selectUser(name); };
+    grid.appendChild(card);
+  });
+}
+
+function selectUser(name) {
+  state.currentUser = name;
+  document.getElementById('home-user-chip').textContent = name;
+  showScreen('screen-home');
+  loadHomeData();
+}
+
+// ── HOME ──
+function loadHomeData() {
+  document.getElementById('member-list').innerHTML = '<div class="loading-dots"><span></span><span></span><span></span></div>';
+  api({ action: 'getSubmitted', from: state.currentUser })
+    .then(function(submitted) {
+      state.submittedTo = submitted || [];
+      renderMemberList();
+    })
+    .catch(function() {
+      state.submittedTo = [];
+      renderMemberList();
+      showToast('Could not load data — check your connection.');
+    });
+}
+
+function renderMemberList() {
+  var others = MEMBERS.filter(function(m) { return m !== state.currentUser; });
+  var doneCount = state.submittedTo.length;
+  document.getElementById('progress-text').textContent = doneCount + ' / ' + others.length;
+  document.getElementById('progress-fill').style.width = Math.round((doneCount / others.length) * 100) + '%';
+  var list = document.getElementById('member-list');
+  list.innerHTML = '';
+  others.forEach(function(name) {
+    var done = state.submittedTo.indexOf(name) !== -1;
+    var card = document.createElement('div');
+    card.className = 'member-card' + (done ? ' done' : '');
+    card.innerHTML =
+      '<div class="avatar" style="background:' + COLORS[name] + '">' + name[0] + '</div>' +
+      '<div class="member-info"><div class="member-name">' + name + '</div>' +
+      '<div class="member-status' + (done ? ' done-text' : '') + '">' + (done ? 'Feedback sent this month' : 'Tap to give feedback') + '</div></div>' +
+      (done ? '<span class="done-badge">✓ Done</span>' : '<span class="chevron">→</span>');
+    if (!done) card.onclick = function() { openFeedbackForm(name); };
+    list.appendChild(card);
+  });
+}
+
+// ── TABS ──
+function switchTab(tab) {
+  document.getElementById('tab-give').className = 'tab' + (tab === 'give' ? ' active' : '');
+  document.getElementById('tab-receive').className = 'tab' + (tab === 'receive' ? ' active' : '');
+  document.getElementById('pane-give').style.display = tab === 'give' ? 'block' : 'none';
+  document.getElementById('pane-receive').style.display = tab === 'receive' ? 'block' : 'none';
+  if (tab === 'receive') loadMyFeedback();
+}
+
+function loadMyFeedback() {
+  document.querySelector('#pane-receive .loading-dots').style.display = 'flex';
+  document.getElementById('receive-content').style.display = 'none';
+  api({ action: 'getFeedback', for: state.currentUser })
+    .then(renderMyFeedback)
+    .catch(function() { renderMyFeedback([]); });
+}
+
+function renderMyFeedback(feedbacks) {
+  document.querySelector('#pane-receive .loading-dots').style.display = 'none';
+  var content = document.getElementById('receive-content');
+  content.style.display = 'block';
+  if (!feedbacks || feedbacks.length === 0) {
+    content.innerHTML = '<div class="empty-state"><div class="empty-icon">📭</div>No feedback yet this month.<br>Check back after the others have had a chance to share.</div>';
+    return;
+  }
+  var html = '<div class="feedback-cards">';
+  feedbacks.forEach(function(fb) {
+    html += '<div class="feedback-card"><div class="feedback-from"><div class="avatar" style="background:' + (COLORS[fb.from]||'#666') + ';width:24px;height:24px;font-size:10px">' + fb.from[0] + '</div>From ' + fb.from + '</div><div class="feedback-entries">';
+    if (fb.appreciation) html += '<div><div class="feedback-entry-label">Appreciation</div><div class="feedback-entry-text">' + esc(fb.appreciation) + '</div></div>';
+    if (fb.growth) html += '<div><div class="feedback-entry-label">Growth Edge</div><div class="feedback-entry-text">' + esc(fb.growth) + '</div></div>';
+    if (fb.word) html += '<div><div class="feedback-entry-label">One Word</div><div class="feedback-entry-text">' + esc(fb.word) + '</div></div>';
+    if (fb.challenge) html += '<div><div class="feedback-entry-label">Challenge</div><div class="feedback-entry-text">' + esc(fb.challenge) + '</div></div>';
+    html += '</div></div>';
+  });
+  content.innerHTML = html + '</div>';
+}
+
+// ── FORM ──
+function openFeedbackForm(targetName) {
+  state.selectedTarget = targetName;
+  document.getElementById('form-title').textContent = targetName;
+  document.getElementById('form-header').innerHTML =
+    '<div class="avatar" style="background:' + COLORS[targetName] + ';width:52px;height:52px;font-size:20px">' + targetName[0] + '</div>' +
+    '<div><div class="form-header-name">' + targetName + '</div><div class="form-header-sub">Your honest words are a gift.</div></div>';
+  document.getElementById('q1-text').textContent = 'What do you genuinely appreciate or admire about ' + targetName + '?';
+  document.getElementById('q2-text').textContent = "What's a growth edge, blind spot, or challenge you notice in " + targetName + '?';
+  document.getElementById('q3-text').textContent = 'Describe ' + targetName + "'s energy or presence in one word.";
+  document.getElementById('q4-text').textContent = 'What challenge or invitation would you offer ' + targetName + ' for this month?';
+  ['q1','q2','q3','q4'].forEach(function(id) { document.getElementById(id).value = ''; });
+  document.getElementById('submit-btn').disabled = false;
+  document.getElementById('submit-btn').textContent = 'Send Feedback 🔥';
+  showScreen('screen-form');
+}
+
+function submitForm() {
+  var q1 = document.getElementById('q1').value.trim();
+  var q2 = document.getElementById('q2').value.trim();
+  var q3 = document.getElementById('q3').value.trim();
+  var q4 = document.getElementById('q4').value.trim();
+  if (!q1 && !q2 && !q3 && !q4) { showToast('Fill in at least one answer first.'); return; }
+  var btn = document.getElementById('submit-btn');
+  btn.disabled = true; btn.textContent = 'Sending…';
+  api({ action: 'submit', from: state.currentUser, to: state.selectedTarget, q1: q1, q2: q2, q3: q3, q4: q4 })
+    .then(function() {
+      state.submittedTo.push(state.selectedTarget);
+      document.getElementById('success-sub').textContent = 'Your feedback for ' + state.selectedTarget + ' has been saved.';
+      document.getElementById('streak-num').textContent = state.submittedTo.length;
+      showScreen('screen-success');
+    })
+    .catch(function() {
+      btn.disabled = false; btn.textContent = 'Send Feedback 🔥';
+      showToast('Something went wrong — try again.');
+    });
+}
+
+// ── NAV ──
+function showScreen(id) { document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');}); document.getElementById(id).classList.add('active'); window.scrollTo(0,0); }
+function goBack() { showScreen('screen-home'); }
+function goHome() { renderMemberList(); showScreen('screen-home'); switchTab('give'); }
+function goWelcome() { state.currentUser=null; state.submittedTo=[]; showScreen('screen-welcome'); }
+function showToast(msg) { var t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(function(){t.classList.remove('show');},3000); }
+function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+</script>
+</body>
+</html>
