@@ -4,225 +4,205 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Daily Dose of Togetherness</title>
-<meta name="description" content="Toltech &amp; Solarah's daily prescription. Take one dose daily.">
-<meta name="theme-color" content="#fdf3f6">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💊</text></svg>">
+<meta name="description" content="Couple Panel Results for Toltech &amp; Solarah. Take one dose daily.">
+<meta name="theme-color" content="#f7f7f4">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧪</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shrikhand&family=Nunito:wght@500;700;800&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+Condensed:wght@400;600;700&family=Mrs+Saint+Delafield&display=swap">
 <style>
-/* Layout: one phone-width column. A pharmacy prescription label up top, the daily question as four pill buttons, then the chart and stat stickers. */
+/* Layout: a single printed lab report on clinical paper. Header, subject block, today's specimen, results table, trend plot, interpretation. Deliberately one look (paper), so it stays the same in light and dark. */
 :root{
-  --bg:#fdf3f6;         /* pharmacy-bag blush */
-  --paper:#fffdf8;      /* label paper */
-  --ink:#3b2a45;        /* aubergine ink */
-  --muted:#8a7593;
-  --rule:#e9d9e6;
-  --pink:#ffb3c8; --pink-ink:#8f2a4e;
-  --mint:#b8ead6; --mint-ink:#1f6b52;
-  --lilac:#d6c8ff; --lilac-ink:#4b3a99;
-  --butter:#ffe7a3; --butter-ink:#7a5a00;
-  --warn:#ff9d6c; --warn-ink:#5a2100;
-  --accent:#e2557f;
-  --shadow:0 2px 0 rgba(59,42,69,.12), 0 10px 24px -12px rgba(59,42,69,.35);
-  --f-display:"Shrikhand","Cooper Black",Georgia,serif;
-  --f-body:"Nunito",ui-rounded,system-ui,sans-serif;
+  --paper:#f7f7f4;      /* report paper */
+  --ink:#111111;
+  --muted:#5c5c57;
+  --rule:#d7d7d0;
+  --band:#e9ebe3;       /* reference range band */
+  --flag:#c8102e;       /* high flag + stamp red */
+  --f-sans:"IBM Plex Sans Condensed","Arial Narrow",Arial,sans-serif;
   --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
-}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#231a2b; --paper:#2f2438; --ink:#f6e9f3; --muted:#b9a6c2; --rule:#47394f;
-  --pink:#7d3554; --pink-ink:#ffd3e0; --mint:#245e4c; --mint-ink:#c9f5e4;
-  --lilac:#493d82; --lilac-ink:#e3dbff; --butter:#6b5418; --butter-ink:#fff0c4;
-  --warn:#b4552a; --warn-ink:#fff1e8; --accent:#ff86a8; color-scheme:dark;
-  --shadow:0 2px 0 rgba(0,0,0,.3), 0 10px 24px -12px rgba(0,0,0,.7);
-}}
-:root[data-theme="dark"]{
-  --bg:#231a2b; --paper:#2f2438; --ink:#f6e9f3; --muted:#b9a6c2; --rule:#47394f;
-  --pink:#7d3554; --pink-ink:#ffd3e0; --mint:#245e4c; --mint-ink:#c9f5e4;
-  --lilac:#493d82; --lilac-ink:#e3dbff; --butter:#6b5418; --butter-ink:#fff0c4;
-  --warn:#b4552a; --warn-ink:#fff1e8; --accent:#ff86a8; color-scheme:dark;
-  --shadow:0 2px 0 rgba(0,0,0,.3), 0 10px 24px -12px rgba(0,0,0,.7);
+  color-scheme:light;
 }
 *{box-sizing:border-box}
-html{color-scheme:light}
 :root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.45;
-  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 48px}
-.wrap{max-width:440px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
-h1,h2{margin:0;text-wrap:balance}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-sans);font-size:15px;line-height:1.4;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 40px}
+.wrap{max-width:460px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+h1,h2,h3{margin:0;text-wrap:balance}
 button{font:inherit;color:inherit;cursor:pointer}
-button:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+button:focus-visible{outline:2px solid var(--flag);outline-offset:2px}
+.mono{font-family:var(--f-mono)}
+.label{font-family:var(--f-mono);font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600}
 
-/* Prescription label */
-.rx{background:var(--paper);border-radius:6px;box-shadow:var(--shadow);position:relative;overflow:hidden;font-family:var(--f-mono);font-size:12.5px}
-.rx-top{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 14px;border-bottom:2px solid var(--ink);text-transform:uppercase;letter-spacing:.08em;font-weight:600;font-size:11px}
-.rx-body{padding:12px 14px 14px;display:grid;gap:8px}
-.rx-name{font-family:var(--f-display);font-size:30px;line-height:1.05;letter-spacing:0;margin:2px 0 2px;color:var(--accent)}
-.rx-drug{font-family:var(--f-body);font-weight:800;font-size:15px}
-.rx-row{display:flex;justify-content:space-between;gap:12px;border-top:1px dashed var(--rule);padding-top:6px}
-.rx-row span:first-child{color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-size:10.5px;padding-top:2px}
-.rx-row span:last-child{text-align:right}
-.rx-sig{font-size:13.5px;line-height:1.5}
-.warn{background:var(--warn);color:var(--warn-ink);font-family:var(--f-body);font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:.04em;
-  padding:8px 14px;display:flex;gap:10px;align-items:center}
-.warn b{font-size:18px;line-height:1}
-.barcode{height:26px;margin-top:4px;background:repeating-linear-gradient(90deg,var(--ink) 0 2px,transparent 2px 4px,var(--ink) 4px 5px,transparent 5px 8px,var(--ink) 8px 11px,transparent 11px 12px);opacity:.85}
+/* Header */
+.lab{display:flex;justify-content:space-between;gap:10px;font-family:var(--f-mono);font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.hd{display:flex;justify-content:space-between;align-items:end;gap:12px;border-bottom:3px solid var(--ink);padding-bottom:8px}
+.hd h1{font-size:clamp(28px,8vw,36px);font-weight:700;line-height:.95;letter-spacing:-.01em}
+.hd .spec{font-family:var(--f-mono);font-size:10.5px;text-align:right;color:var(--muted);line-height:1.5;white-space:nowrap}
+.hd .spec b{color:var(--ink);font-weight:600}
+.status{display:inline-block;background:var(--ink);color:var(--paper);padding:0 5px;font-weight:600}
 
-/* Question */
-.q{text-align:center;display:grid;gap:14px}
-.q h2{font-family:var(--f-display);font-weight:400;font-size:clamp(28px,8vw,36px);line-height:1.1}
-.q small{color:var(--muted);font-weight:700}
-.doses{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.dose{border:0;border-radius:999px;padding:18px 10px;font-weight:800;font-size:18px;box-shadow:var(--shadow);position:relative;overflow:hidden;
-  transition:transform .12s ease}
-.dose::after{content:"";position:absolute;inset:0 50% 0 0;background:rgba(255,255,255,.28)}
-.dose span{position:relative}
-.dose:active{transform:scale(.96)}
-.d1{background:var(--mint);color:var(--mint-ink)}
-.d2{background:var(--butter);color:var(--butter-ink)}
-.d3{background:var(--lilac);color:var(--lilac-ink)}
-.d4{background:var(--pink);color:var(--pink-ink)}
-.taken{font-size:14px;color:var(--muted);font-weight:700}
+.meta{display:grid;grid-template-columns:1fr 1fr;gap:8px 14px;font-size:13.5px}
+.meta div{display:grid;gap:1px;min-width:0}
+.meta b{font-weight:600}
 
-/* Result */
-.result{background:var(--paper);border-radius:18px;padding:18px;box-shadow:var(--shadow);text-align:center;display:grid;gap:8px}
-.result .verdict{font-family:var(--f-display);font-size:30px;line-height:1.1;color:var(--accent)}
-.result .quip{font-weight:800;font-size:17px}
-.result .compliment{font-size:15px;color:var(--muted);font-style:italic}
-.result.beyond{background:linear-gradient(135deg,var(--pink),var(--lilac),var(--mint),var(--butter));}
-.result.beyond .verdict,.result.beyond .quip{color:var(--ink)}
-.result.beyond .compliment{color:var(--ink)}
-.pop{animation:pop .45s cubic-bezier(.2,1.6,.4,1)}
-@keyframes pop{from{transform:scale(.85)}to{transform:scale(1)}}
+/* Today's specimen */
+.spec-card{border:1.5px solid var(--ink);padding:14px;display:grid;gap:12px;position:relative;overflow:hidden}
+.spec-card h2{font-size:21px;font-weight:700;line-height:1.15}
+.opts{display:grid;gap:8px}
+.opt{display:flex;align-items:center;gap:12px;background:transparent;border:1px solid var(--ink);padding:12px 12px;font-size:16px;font-weight:600;text-align:left;width:100%;transition:background .12s}
+.opt::before{content:"";flex:none;width:16px;height:16px;border:1.5px solid var(--ink);background:transparent}
+.opt.on::before{background:var(--ink);box-shadow:inset 0 0 0 2.5px var(--paper)}
+.opt:active{background:var(--band)}
+.opt .code{margin-left:auto;font-family:var(--f-mono);font-size:10.5px;color:var(--muted);font-weight:400}
+.hint{font-family:var(--f-mono);font-size:11px;color:var(--muted)}
 
-/* Stats */
-.sec-title{font-family:var(--f-mono);text-transform:uppercase;letter-spacing:.1em;font-size:11px;color:var(--muted);font-weight:600}
-.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.stat{background:var(--paper);border-radius:14px;padding:12px 14px;box-shadow:var(--shadow);display:grid;gap:2px;min-width:0}
-.stat .v{font-family:var(--f-display);font-size:26px;line-height:1.1;font-variant-numeric:tabular-nums}
-.stat .l{font-size:12.5px;font-weight:700;color:var(--muted)}
-.stat:nth-child(1) .v{color:var(--mint-ink)}
-.stat:nth-child(2) .v{color:var(--accent)}
-.stat:nth-child(3) .v{color:var(--lilac-ink)}
-.stat:nth-child(4) .v{color:var(--butter-ink)}
+.result{border-top:1px dashed var(--ink);padding-top:12px;display:grid;gap:6px}
+.result .r1{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.result .val{font-size:26px;font-weight:700;line-height:1}
+.result .fl{font-family:var(--f-mono);font-size:11px;color:var(--flag);font-weight:600;border:1px solid var(--flag);padding:1px 5px}
+.result .interp{font-size:15px}
+.result .note{font-family:var(--f-mono);font-size:11.5px;color:var(--muted);line-height:1.5}
 
-.chart-card{background:var(--paper);border-radius:14px;padding:14px;box-shadow:var(--shadow);display:grid;gap:8px}
-.chart-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
-.chart-head h3{margin:0;font-size:16px;font-weight:800}
-.chart-head span{font-size:12px;color:var(--muted);font-weight:700}
-svg{display:block;width:100%;height:auto;overflow:visible}
-.foot{text-align:center;font-family:var(--f-mono);font-size:11px;color:var(--muted);line-height:1.6}
-.foot button{background:none;border:0;text-decoration:underline;color:var(--muted);font-family:inherit;font-size:inherit;padding:4px}
-#confetti{position:fixed;inset:0;pointer-events:none;z-index:50;width:100%;height:100%}
-@media (prefers-reduced-motion: reduce){.pop{animation:none}.dose{transition:none}}
+.stamp{position:absolute;right:12px;bottom:16px;transform:rotate(-12deg);border:3px solid var(--flag);color:var(--flag);
+  font-weight:700;font-size:17px;letter-spacing:.1em;padding:4px 10px;opacity:0;pointer-events:none;text-transform:uppercase;
+  mix-blend-mode:multiply;border-radius:3px}
+.stamp.show{opacity:.85;animation:thud .35s cubic-bezier(.2,1.4,.4,1)}
+@keyframes thud{from{transform:rotate(-12deg) scale(2.2);opacity:0}to{transform:rotate(-12deg) scale(1);opacity:.85}}
+
+/* Results table */
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{font-family:var(--f-mono);font-size:9.5px;text-transform:uppercase;letter-spacing:.06em;text-align:left;color:var(--muted);font-weight:600;border-bottom:1.5px solid var(--ink);padding:5px 0}
+td{padding:8px 0;border-bottom:1px solid var(--rule);vertical-align:top}
+td.r,th.r{text-align:right}
+td.v{font-family:var(--f-mono);font-size:12.5px;text-align:right;white-space:nowrap;padding-left:8px}
+td.f{font-family:var(--f-mono);font-size:12px;color:var(--flag);font-weight:600;text-align:center;width:28px}
+td.ref{font-family:var(--f-mono);font-size:10.5px;color:var(--muted);text-align:right;padding-left:8px}
+.hi{color:var(--flag);font-weight:600}
+
+/* Trend */
+.trend{display:grid;gap:6px}
+.trend-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
+.trend-head h3{font-size:15px;font-weight:700}
+svg{display:block;width:100%;height:auto}
+
+.foot{display:grid;gap:8px;border-top:3px solid var(--ink);padding-top:10px;font-family:var(--f-mono);font-size:11px;color:var(--muted);line-height:1.55}
+.foot b{color:var(--ink);font-weight:600}
+.foot button{background:none;border:0;text-decoration:underline;color:var(--muted);font-family:inherit;font-size:inherit;padding:2px}
+.sig{display:flex;justify-content:space-between;align-items:end;gap:12px}
+.sig .line{font-family:"Mrs Saint Delafield","Brush Script MT","Segoe Script",cursive;font-size:30px;color:var(--ink);border-bottom:1px solid var(--ink);padding:0 6px;line-height:1.1}
+@media (prefers-reduced-motion: reduce){.stamp.show{animation:none}.opt{transition:none}}
 </style>
 
 </head>
 <body>
-<canvas id="confetti" aria-hidden="true"></canvas>
 <main class="wrap">
+  <div class="lab"><span>Togetherness Diagnostics Laboratory</span><span>Page 1 of 1</span></div>
 
-  <section class="rx" aria-label="Prescription label">
-    <div class="rx-top"><span>Togetherness Pharmacy</span><span>Rx #0000LOVE</span></div>
-    <div class="rx-body">
-      <div class="rx-row" style="border-top:0;padding-top:0"><span>Patients</span><span>Filled <b id="filled"></b></span></div>
-      <h1 class="rx-name">Toltech &amp; Solarah</h1>
-      <div class="rx-drug">The Daily Dose of How Good We Are Together, 1000mg</div>
-      <div class="rx-sig">Take one dose daily, by mouth or by heart. Report results honestly. All results are positive.</div>
-      <div class="rx-row"><span>Side effects</span><span>Smiling, giggling, spontaneous hand-holding</span></div>
-      <div class="rx-row"><span>Refills</span><span>Unlimited, forever</span></div>
-      <div class="rx-row"><span>Streak</span><span><b id="streak">0 days</b> in a row</span></div>
-      <div class="rx-row"><span>Prescriber</span><span>Dr. The Universe, MD</span></div>
-      <div class="barcode" aria-hidden="true"></div>
+  <header class="hd">
+    <h1>Couple Panel<br>Results</h1>
+    <div class="spec">Specimen <b>#TS-<span id="spec-no">0001</span></b><br>Collected <b id="collected"></b><br>Status <span class="status" id="status">PENDING</span></div>
+  </header>
+
+  <section class="meta" aria-label="Subjects">
+    <div><span class="label">Subjects</span><b>Toltech &amp; Solarah</b></div>
+    <div><span class="label">Ordering physician</span><b>Dr. The Universe, MD</b></div>
+    <div><span class="label">Fasting</span><b>No (snacks)</b></div>
+    <div><span class="label">Consecutive days</span><b id="streak-meta">0</b></div>
+  </section>
+
+  <section class="spec-card" aria-labelledby="q">
+    <div class="stamp" id="stamp" aria-hidden="true">Confirmed</div>
+    <span class="label">Today's specimen</span>
+    <h2 id="q">How good are we together today?</h2>
+    <div class="opts" role="group" aria-labelledby="q">
+      <button class="opt" data-level="0" id="opt-good" type="button">Good<span class="code">TGT-1</span></button>
+      <button class="opt" data-level="1" id="opt-really" type="button">Really Good<span class="code">TGT-2</span></button>
+      <button class="opt" data-level="2" id="opt-excellent" type="button">Excellent<span class="code">TGT-3</span></button>
+      <button class="opt" data-level="3" id="opt-amazing" type="button">Amazing<span class="code">TGT-4</span></button>
     </div>
-    <div class="warn"><b>!</b><span>May cause extreme togetherness. Do not operate heavy machinery while this cute.</span></div>
-  </section>
-
-  <section class="q">
-    <h2>How good are we together today?</h2>
-    <div class="doses" role="group" aria-label="Pick today's dose">
-      <button class="dose d1" data-level="0" id="btn-good"><span>Good</span></button>
-      <button class="dose d2" data-level="1" id="btn-really"><span>Really Good</span></button>
-      <button class="dose d3" data-level="2" id="btn-excellent"><span>Excellent</span></button>
-      <button class="dose d4" data-level="3" id="btn-amazing"><span>Amazing</span></button>
-    </div>
-    <small id="taken" class="taken">Today's dose hasn't been taken yet. Doctor's orders.</small>
-  </section>
-
-  <section class="result" id="result" aria-live="polite">
-    <div class="verdict" id="verdict">Pharmacist's note</div>
-    <div class="quip" id="quip">Pick a dose above. There are no wrong answers, only correct ones.</div>
-    <div class="compliment" id="compliment">Lab results pending, but early signs look extremely good together.</div>
-  </section>
-
-  <section style="display:grid;gap:10px">
-    <div class="sec-title">Official lab results</div>
-    <div class="stats">
-      <div class="stat"><div class="v">100%</div><div class="l">Odds we're good together</div></div>
-      <div class="stat"><div class="v" id="s-high">Today</div><div class="l">All-time high (again)</div></div>
-      <div class="stat"><div class="v" id="s-doses">0</div><div class="l">Doses taken</div></div>
-      <div class="stat"><div class="v">0</div><div class="l">Bad days on record</div></div>
+    <div class="result" id="result" aria-live="polite">
+      <div class="r1"><span class="label">Result</span><span class="val" id="val">Pending</span><span class="fl" id="fl" hidden>H</span></div>
+      <div class="interp" id="interp">Mark one box above. All answers fall within the healthy range.</div>
+      <div class="note" id="note">Clinician's note: early signs look extremely good together.</div>
     </div>
   </section>
 
-  <section class="chart-card">
-    <div class="chart-head"><h3>Togetherness Index</h3><span id="chart-note">Last 14 days</span></div>
-    <svg id="chart" viewBox="0 0 360 200" role="img" aria-label="Line chart of daily togetherness scores"></svg>
+  <section aria-label="Results">
+    <table>
+      <thead><tr><th>Test</th><th class="r">Result</th><th class="r" style="text-align:center">Flag</th><th class="r">Ref. range</th></tr></thead>
+      <tbody>
+        <tr><td>Togetherness, today</td><td class="v" id="r-today">Pending</td><td class="f" id="f-today"></td><td class="ref">Good–Amazing</td></tr>
+        <tr><td>Odds we're good together</td><td class="v">100%</td><td class="f"></td><td class="ref">100%</td></tr>
+        <tr><td>All-time high</td><td class="v" id="r-high">Pending</td><td class="f" id="f-high"></td><td class="ref">Today, again</td></tr>
+        <tr><td>Doses on record</td><td class="v" id="r-doses">0</td><td class="f"></td><td class="ref">1 daily</td></tr>
+        <tr><td>Bad days</td><td class="v">0</td><td class="f"></td><td class="ref">0</td></tr>
+        <tr><td>Inside jokes</td><td class="v">Too many</td><td class="f">H</td><td class="ref">Some</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="trend">
+    <div class="trend-head"><h3>Togetherness index, 14-day trend</h3><span class="label" id="chart-note">Last 14 days</span></div>
+    <svg id="chart" viewBox="0 0 360 190" role="img" aria-label="Line chart of daily togetherness results"></svg>
   </section>
 
   <footer class="foot">
-    Saved on this phone only. Keep out of reach of people who aren't us.<br>
-    <button id="reset" type="button">Reset history</button>
-    <span id="reset-confirm" hidden> Sure? <button id="reset-yes" type="button">Yes, start over</button> <button id="reset-no" type="button">No</button></span>
+    <div><b>Interpretation:</b> Results consistent with being so good together. Prognosis excellent. No follow-up needed.</div>
+    <div class="sig"><span>Reviewed by<br><b>Dr. The Universe, MD</b></span><span class="line" aria-hidden="true">The Universe</span></div>
+    <div>Specimens stored on this phone only. Keep out of reach of people who aren't us.
+      <button id="reset" type="button">Discard all specimens</button>
+      <span id="reset-confirm" hidden>Sure? <button id="reset-yes" type="button">Yes, start over</button> <button id="reset-no" type="button">No</button></span>
+    </div>
   </footer>
 </main>
 
 <script>
 (() => {
   const LEVELS = [
-    { name: "Good", score: 70, quips: [
-      "Good? That's just 'Amazing' being humble.",
-      "A 'Good' day for us is a great day for most couples.",
-      "Even our good days have good days.",
-      "Logged. Scientists say our Good is everyone else's Excellent."
+    { name: "Good", score: 70, flag: "H", stamp: "Confirmed", quips: [
+      "Within normal limits. Our normal is most couples' personal best.",
+      "Good. Lab notes this is just Amazing being modest.",
+      "Result is Good. Retesting unlikely to find anything less.",
+      "Healthy reading. Even our good days have good days."
     ]},
-    { name: "Really Good", score: 82, quips: [
-      "Really good. Like, suspiciously good.",
-      "Two 'really's and you'd be bragging.",
-      "Confirmed. Neighbors have noticed.",
-      "That's a solid dose. Side effects may include more smiling."
+    { name: "Really Good", score: 82, flag: "H", stamp: "Confirmed", quips: [
+      "Really Good. Elevated beyond expected values.",
+      "Result verified twice. Still really good.",
+      "Neighbors report noticing. Consistent with findings.",
+      "Above reference range. No treatment indicated."
     ]},
-    { name: "Excellent", score: 92, quips: [
-      "Excellent! The lab had to buy a bigger chart.",
+    { name: "Excellent", score: 92, flag: "HH", stamp: "Verified", quips: [
+      "Excellent. The lab had to order a bigger chart.",
       "Peer-reviewed and certified excellent.",
-      "This much excellence should require a prescription. Oh wait.",
-      "Excellent. Please hydrate, this is a lot of togetherness."
+      "Markedly elevated. Patients advised to hydrate.",
+      "Excellent. Second opinion requested. Second opinion agreed."
     ]},
-    { name: "Amazing", score: 100, quips: [
-      "AMAZING. Maximum dose. The scale only goes this high.",
-      "Amazing! We broke the togetherness-o-meter. Again.",
-      "Officially amazing. Notifying the newspapers.",
-      "Amazing. Honestly, what did you expect from us?"
+    { name: "Amazing", score: 100, flag: "HH", stamp: "Certified", quips: [
+      "Amazing. Maximum reportable value.",
+      "Amazing. Instruments recalibrated. Still amazing.",
+      "Result exceeds what this lab usually sees. Please continue.",
+      "Amazing. Honestly, what did we expect from these two?"
     ]}
   ];
-  const BEYOND = { name: "Beyond Amazing", score: 120, quips: [
-    "SECRET LEVEL UNLOCKED. The chart literally can't contain us.",
-    "You found the rare Beyond Amazing. Doctors are baffled.",
-    "Off the charts. That's not a figure of speech, look at the chart."
+  const BEYOND = { name: "Beyond Amazing", score: 120, flag: "!!", stamp: "Off the charts", quips: [
+    "CRITICAL VALUE (good). Result exceeds the measurable range.",
+    "Rare finding: Beyond Amazing. Lab staff have been informed.",
+    "Off the charts. Literally. See trend plot."
   ]};
-  const COMPLIMENTS = [
+  const NOTES = [
     "Solarah, you make every day the good kind.",
-    "Toltech + Solarah: a combo so strong it should be illegal.",
+    "Toltech + Solarah: a combination with no known side effects except joy.",
     "Statistically, you two are the best two.",
     "You laugh at the same stuff. That's basically a superpower.",
     "Nobody does Tuesdays together like you two.",
-    "Your snack-sharing ratio is a model for the world.",
+    "Snack-sharing ratio within ideal range.",
     "Experts agree: you are each other's favorite person.",
     "If teamwork were a sport, you'd have the trophies.",
-    "Even your bickering is cute. It's unfair, honestly.",
+    "Even the bickering is cute. Noted as benign.",
     "You two make ordinary errands feel like a date.",
     "The universe ran the numbers. You're a match.",
-    "Your inside jokes have inside jokes.",
+    "Inside jokes have developed inside jokes. Monitor closely.",
     "Solarah, Toltech thinks you're the coolest. Verified.",
     "Toltech, Solarah thinks you're pretty great too. Probably.",
     "So good together it's almost showing off."
@@ -233,13 +213,14 @@ svg{display:block;width:100%;height:auto;overflow:visible}
   const dayKey = d => { const x = new Date(d); return x.getFullYear()+"-"+String(x.getMonth()+1).padStart(2,"0")+"-"+String(x.getDate()).padStart(2,"0"); };
   const today = () => dayKey(new Date());
   const shift = (key, n) => { const [y,m,d] = key.split("-").map(Number); return dayKey(new Date(y, m-1, d+n)); };
+  const byScore = s => [...LEVELS, BEYOND].find(l => l.score === s);
 
   let history = {};
   try { history = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { history = {}; }
   const save = () => { try { localStorage.setItem(KEY, JSON.stringify(history)); } catch (e) {} };
 
   const $ = id => document.getElementById(id);
-  $("filled").textContent = new Date().toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" });
+  $("collected").textContent = new Date().toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" });
 
   function streak() {
     let k = today(), n = 0;
@@ -250,54 +231,56 @@ svg{display:block;width:100%;height:auto;overflow:visible}
 
   function render() {
     const s = streak();
-    $("streak").textContent = s + (s === 1 ? " day" : " days");
+    $("streak-meta").textContent = s + (s === 1 ? " day" : " days");
     const days = Object.keys(history).length;
-    $("s-doses").textContent = days;
+    $("r-doses").textContent = days;
+    $("spec-no").textContent = String(days || 1).padStart(4, "0");
     const t = history[today()];
-    $("taken").textContent = t ? "Today's dose: " + t.name + ". Tap again anytime for a booster." : "Today's dose hasn't been taken yet. Doctor's orders.";
-    $("s-high").textContent = days ? "Today" : "Soon";
+    $("status").textContent = t ? "FINAL" : "PENDING";
+    $("r-today").textContent = t ? t.name : "Pending";
+    $("f-today").textContent = t ? (byScore(t.score) || LEVELS[3]).flag : "";
+    $("r-high").textContent = days ? (t ? "Today" : "Recently") : "Pending";
+    $("f-high").textContent = days ? "H" : "";
+    document.querySelectorAll(".opt").forEach(b => b.classList.toggle("on", !!t && LEVELS[+b.dataset.level].name === t.name));
     drawChart();
   }
 
   function drawChart() {
     const svg = $("chart");
-    const W = 360, H = 200, L = 46, R = 12, T = 18, B = 26;
+    const W = 360, H = 190, L = 58, R = 10, T = 16, B = 24;
     const keys = []; for (let i = 13; i >= 0; i--) keys.push(shift(today(), -i));
     const real = keys.some(k => history[k]);
-    const example = [72, 75, 74, 80, 82, 81, 86, 88, 87, 92, 93, 95, 98, 100];
-    const pts = keys.map((k, i) => ({ k, v: real ? (history[k] ? history[k].score : null) : example[i] }));
-    $("chart-note").textContent = real ? "Last 14 days" : "Example. Yours starts with today's dose.";
-    const yMin = 50, yMax = 120;
+    const example = [70, 70, 82, 82, 70, 92, 82, 92, 100, 92, 100, 100, 92, 100];
+    const pts = keys.map((k, i) => ({ v: real ? (history[k] ? history[k].score : null) : example[i] }));
+    $("chart-note").textContent = real ? "Last 14 days" : "Example data";
+    const yMin = 55, yMax = 122;
     const x = i => L + (i * (W - L - R)) / 13;
     const y = v => T + ((yMax - Math.min(v, yMax)) * (H - T - B)) / (yMax - yMin);
-    const ticks = [[70, "Good"], [82, "Really"], [92, "Excellent"], [100, "Amazing"]];
-    let g = "";
-    ticks.forEach(([v, lab]) => {
+    const mono = 'font-family="IBM Plex Mono, monospace"';
+    let g = `<rect x="${L}" y="${y(100)}" width="${W - L - R}" height="${y(70) - y(100)}" fill="var(--band)"/>`;
+    g += `<text x="${W - R - 4}" y="${y(70) - 5}" text-anchor="end" font-size="8.5" ${mono} fill="var(--muted)">REFERENCE RANGE</text>`;
+    [[70, "Good"], [82, "Really"], [92, "Excellent"], [100, "Amazing"]].forEach(([v, lab]) => {
       g += `<line x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}" stroke="var(--rule)" stroke-width="1"/>`;
-      g += `<text x="${L - 6}" y="${y(v) + 3.5}" text-anchor="end" font-size="9.5" font-family="IBM Plex Mono, monospace" fill="var(--muted)">${lab}</text>`;
+      g += `<text x="${L - 6}" y="${y(v) + 3.5}" text-anchor="end" font-size="9.5" ${mono} fill="var(--muted)">${lab}</text>`;
     });
-    g += `<line x1="${L}" x2="${W - R}" y1="${y(120)}" y2="${y(120)}" stroke="var(--accent)" stroke-dasharray="4 4" stroke-width="1"/>`;
-    g += `<text x="${W - R}" y="${y(120) - 5}" text-anchor="end" font-size="9.5" font-family="IBM Plex Mono, monospace" fill="var(--accent)">Off the charts</text>`;
+    g += `<line x1="${L}" x2="${W - R}" y1="${y(120)}" y2="${y(120)}" stroke="var(--flag)" stroke-dasharray="3 3" stroke-width="1"/>`;
+    g += `<text x="${L - 6}" y="${y(120) + 3.5}" text-anchor="end" font-size="9.5" ${mono} fill="var(--flag)">Beyond</text>`;
+    g += `<line x1="${L}" x2="${W - R}" y1="${H - B}" y2="${H - B}" stroke="var(--ink)" stroke-width="1.5"/>`;
     [0, 13].forEach(i => {
       const [, m, d] = keys[i].split("-").map(Number);
-      g += `<text x="${x(i)}" y="${H - 8}" text-anchor="${i ? "end" : "start"}" font-size="9.5" font-family="IBM Plex Mono, monospace" fill="var(--muted)">${i === 13 ? "Today" : m + "/" + d}</text>`;
+      g += `<text x="${x(i)}" y="${H - 8}" text-anchor="${i ? "end" : "start"}" font-size="9.5" ${mono} fill="var(--muted)">${i === 13 ? "Today" : m + "/" + d}</text>`;
     });
     const segs = []; let cur = [];
     pts.forEach((p, i) => { if (p.v == null) { if (cur.length) segs.push(cur); cur = []; } else cur.push([x(i), y(p.v)]); });
     if (cur.length) segs.push(cur);
-    const line = real ? "var(--accent)" : "var(--muted)";
+    const col = real ? "var(--ink)" : "var(--muted)";
     segs.forEach(sg => {
-      if (sg.length > 1) {
-        const d = sg.map((p, i) => (i ? "L" : "M") + p[0].toFixed(1) + " " + p[1].toFixed(1)).join(" ");
-        g += `<path d="${d} L${sg[sg.length - 1][0].toFixed(1)} ${H - B} L${sg[0][0].toFixed(1)} ${H - B} Z" fill="${line}" opacity="0.12"/>`;
-        g += `<path d="${d}" fill="none" stroke="${line}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" ${real ? "" : 'stroke-dasharray="5 5"'}/>`;
-      }
+      if (sg.length > 1) g += `<path d="${sg.map((p, i) => (i ? "L" : "M") + p[0].toFixed(1) + " " + p[1].toFixed(1)).join(" ")}" fill="none" stroke="${col}" stroke-width="1.75" ${real ? "" : 'stroke-dasharray="4 3"'}/>`;
     });
     pts.forEach((p, i) => {
       if (p.v == null) return;
-      const isToday = i === 13 && real;
-      g += `<circle cx="${x(i)}" cy="${y(p.v)}" r="${isToday ? 5.5 : 3.5}" fill="${isToday ? "var(--accent)" : "var(--paper)"}" stroke="${line}" stroke-width="2"/>`;
-      if (real && p.v > 100) g += `<text x="${x(i)}" y="${y(p.v) - 9}" text-anchor="middle" font-size="12" fill="var(--accent)">★</text>`;
+      const beyond = p.v > 100, last = i === 13 && real;
+      g += `<rect x="${x(i) - 3.5}" y="${y(p.v) - 3.5}" width="7" height="7" fill="${beyond ? "var(--flag)" : last ? col : "var(--paper)"}" stroke="${beyond ? "var(--flag)" : col}" stroke-width="1.5"/>`;
     });
     svg.innerHTML = g;
   }
@@ -310,54 +293,24 @@ svg{display:block;width:100%;height:auto;overflow:visible}
     const prev = history[k];
     if (!prev || lv.score >= prev.score) history[k] = { name: lv.name, score: lv.score };
     save();
-    const card = $("result");
-    card.classList.toggle("beyond", beyond);
-    $("verdict").textContent = beyond ? "✨ Beyond Amazing ✨" : lv.name + "!";
-    $("quip").textContent = pick(lv.quips);
-    $("compliment").textContent = pick(COMPLIMENTS);
-    card.classList.remove("pop"); void card.offsetWidth; card.classList.add("pop");
-    confetti(beyond ? 220 : 60 + level * 30);
+    $("val").textContent = lv.name;
+    $("val").classList.toggle("hi", beyond);
+    $("fl").hidden = false;
+    $("fl").textContent = beyond ? "CRITICAL (GOOD)" : lv.flag;
+    $("interp").textContent = pick(lv.quips);
+    $("note").textContent = "Clinician's note: " + pick(NOTES);
+    const st = $("stamp");
+    st.textContent = lv.stamp;
+    st.classList.remove("show"); void st.offsetWidth; st.classList.add("show");
+    try { navigator.vibrate && navigator.vibrate(beyond ? [30, 40, 30, 40, 60] : 25); } catch (e) {}
     render();
+    if (beyond) document.querySelectorAll(".opt").forEach(b => b.classList.toggle("on", +b.dataset.level === level));
   }
 
-  document.querySelectorAll(".dose").forEach(b => b.addEventListener("click", () => dose(+b.dataset.level)));
-
+  document.querySelectorAll(".opt").forEach(b => b.addEventListener("click", () => dose(+b.dataset.level)));
   $("reset").addEventListener("click", () => { $("reset-confirm").hidden = false; });
   $("reset-no").addEventListener("click", () => { $("reset-confirm").hidden = true; });
   $("reset-yes").addEventListener("click", () => { history = {}; save(); $("reset-confirm").hidden = true; render(); });
-
-  // Confetti: little hearts and pills
-  const cv = $("confetti"), cx = cv.getContext("2d");
-  let parts = [], raf = 0;
-  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  function size() { cv.width = innerWidth * devicePixelRatio; cv.height = innerHeight * devicePixelRatio; }
-  addEventListener("resize", size); size();
-  function confetti(n) {
-    if (reduce) return;
-    const cs = getComputedStyle(document.documentElement);
-    const cols = ["--pink", "--mint", "--lilac", "--butter", "--accent", "--warn"].map(c => cs.getPropertyValue(c).trim());
-    for (let i = 0; i < n; i++) parts.push({
-      x: innerWidth / 2 + (Math.random() - .5) * 80, y: innerHeight * .45,
-      vx: (Math.random() - .5) * 14, vy: -Math.random() * 14 - 4,
-      r: Math.random() * Math.PI, vr: (Math.random() - .5) * .3,
-      s: 6 + Math.random() * 7, c: pick(cols), heart: Math.random() < .45, life: 0
-    });
-    if (!raf) raf = requestAnimationFrame(tick);
-  }
-  function heart(s) { cx.beginPath(); cx.moveTo(0, s * .3); cx.bezierCurveTo(-s, -s * .4, -s * .4, -s, 0, -s * .35); cx.bezierCurveTo(s * .4, -s, s, -s * .4, 0, s * .3); cx.fill(); }
-  function tick() {
-    cx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
-    cx.clearRect(0, 0, innerWidth, innerHeight);
-    parts = parts.filter(p => p.y < innerHeight + 30 && p.life < 240);
-    parts.forEach(p => {
-      p.vy += .32; p.vx *= .99; p.x += p.vx; p.y += p.vy; p.r += p.vr; p.life++;
-      cx.save(); cx.translate(p.x, p.y); cx.rotate(p.r); cx.fillStyle = p.c;
-      if (p.heart) heart(p.s); else { cx.beginPath(); cx.roundRect ? cx.roundRect(-p.s, -p.s / 2.6, p.s * 2, p.s / 1.3, p.s / 2.6) : cx.rect(-p.s, -p.s / 2.6, p.s * 2, p.s / 1.3); cx.fill(); }
-      cx.restore();
-    });
-    raf = parts.length ? requestAnimationFrame(tick) : 0;
-    if (!raf) cx.clearRect(0, 0, innerWidth, innerHeight);
-  }
 
   render();
 })();
