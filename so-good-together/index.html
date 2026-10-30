@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Daily Dose of Togetherness</title>
+<meta name="description" content="Toltech &amp; Solarah's daily prescription. Take one dose daily.">
+<meta name="theme-color" content="#fdf3f6">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💊</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shrikhand&family=Nunito:wght@500;700;800&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: one phone-width column. A pharmacy prescription label up top, the daily question as four pill buttons, then the chart and stat stickers. */
+:root{
+  --bg:#fdf3f6;         /* pharmacy-bag blush */
+  --paper:#fffdf8;      /* label paper */
+  --ink:#3b2a45;        /* aubergine ink */
+  --muted:#8a7593;
+  --rule:#e9d9e6;
+  --pink:#ffb3c8; --pink-ink:#8f2a4e;
+  --mint:#b8ead6; --mint-ink:#1f6b52;
+  --lilac:#d6c8ff; --lilac-ink:#4b3a99;
+  --butter:#ffe7a3; --butter-ink:#7a5a00;
+  --warn:#ff9d6c; --warn-ink:#5a2100;
+  --accent:#e2557f;
+  --shadow:0 2px 0 rgba(59,42,69,.12), 0 10px 24px -12px rgba(59,42,69,.35);
+  --f-display:"Shrikhand","Cooper Black",Georgia,serif;
+  --f-body:"Nunito",ui-rounded,system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#231a2b; --paper:#2f2438; --ink:#f6e9f3; --muted:#b9a6c2; --rule:#47394f;
+  --pink:#7d3554; --pink-ink:#ffd3e0; --mint:#245e4c; --mint-ink:#c9f5e4;
+  --lilac:#493d82; --lilac-ink:#e3dbff; --butter:#6b5418; --butter-ink:#fff0c4;
+  --warn:#b4552a; --warn-ink:#fff1e8; --accent:#ff86a8; color-scheme:dark;
+  --shadow:0 2px 0 rgba(0,0,0,.3), 0 10px 24px -12px rgba(0,0,0,.7);
+}}
+:root[data-theme="dark"]{
+  --bg:#231a2b; --paper:#2f2438; --ink:#f6e9f3; --muted:#b9a6c2; --rule:#47394f;
+  --pink:#7d3554; --pink-ink:#ffd3e0; --mint:#245e4c; --mint-ink:#c9f5e4;
+  --lilac:#493d82; --lilac-ink:#e3dbff; --butter:#6b5418; --butter-ink:#fff0c4;
+  --warn:#b4552a; --warn-ink:#fff1e8; --accent:#ff86a8; color-scheme:dark;
+  --shadow:0 2px 0 rgba(0,0,0,.3), 0 10px 24px -12px rgba(0,0,0,.7);
+}
+*{box-sizing:border-box}
+html{color-scheme:light}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.45;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 48px}
+.wrap{max-width:440px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
+h1,h2{margin:0;text-wrap:balance}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+
+/* Prescription label */
+.rx{background:var(--paper);border-radius:6px;box-shadow:var(--shadow);position:relative;overflow:hidden;font-family:var(--f-mono);font-size:12.5px}
+.rx-top{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 14px;border-bottom:2px solid var(--ink);text-transform:uppercase;letter-spacing:.08em;font-weight:600;font-size:11px}
+.rx-body{padding:12px 14px 14px;display:grid;gap:8px}
+.rx-name{font-family:var(--f-display);font-size:30px;line-height:1.05;letter-spacing:0;margin:2px 0 2px;color:var(--accent)}
+.rx-drug{font-family:var(--f-body);font-weight:800;font-size:15px}
+.rx-row{display:flex;justify-content:space-between;gap:12px;border-top:1px dashed var(--rule);padding-top:6px}
+.rx-row span:first-child{color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-size:10.5px;padding-top:2px}
+.rx-row span:last-child{text-align:right}
+.rx-sig{font-size:13.5px;line-height:1.5}
+.warn{background:var(--warn);color:var(--warn-ink);font-family:var(--f-body);font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:.04em;
+  padding:8px 14px;display:flex;gap:10px;align-items:center}
+.warn b{font-size:18px;line-height:1}
+.barcode{height:26px;margin-top:4px;background:repeating-linear-gradient(90deg,var(--ink) 0 2px,transparent 2px 4px,var(--ink) 4px 5px,transparent 5px 8px,var(--ink) 8px 11px,transparent 11px 12px);opacity:.85}
+
+/* Question */
+.q{text-align:center;display:grid;gap:14px}
+.q h2{font-family:var(--f-display);font-weight:400;font-size:clamp(28px,8vw,36px);line-height:1.1}
+.q small{color:var(--muted);font-weight:700}
+.doses{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.dose{border:0;border-radius:999px;padding:18px 10px;font-weight:800;font-size:18px;box-shadow:var(--shadow);position:relative;overflow:hidden;
+  transition:transform .12s ease}
+.dose::after{content:"";position:absolute;inset:0 50% 0 0;background:rgba(255,255,255,.28)}
+.dose span{position:relative}
+.dose:active{transform:scale(.96)}
+.d1{background:var(--mint);color:var(--mint-ink)}
+.d2{background:var(--butter);color:var(--butter-ink)}
+.d3{background:var(--lilac);color:var(--lilac-ink)}
+.d4{background:var(--pink);color:var(--pink-ink)}
+.taken{font-size:14px;color:var(--muted);font-weight:700}
+
+/* Result */
+.result{background:var(--paper);border-radius:18px;padding:18px;box-shadow:var(--shadow);text-align:center;display:grid;gap:8px}
+.result .verdict{font-family:var(--f-display);font-size:30px;line-height:1.1;color:var(--accent)}
+.result .quip{font-weight:800;font-size:17px}
+.result .compliment{font-size:15px;color:var(--muted);font-style:italic}
+.result.beyond{background:linear-gradient(135deg,var(--pink),var(--lilac),var(--mint),var(--butter));}
+.result.beyond .verdict,.result.beyond .quip{color:var(--ink)}
+.result.beyond .compliment{color:var(--ink)}
+.pop{animation:pop .45s cubic-bezier(.2,1.6,.4,1)}
+@keyframes pop{from{transform:scale(.85)}to{transform:scale(1)}}
+
+/* Stats */
+.sec-title{font-family:var(--f-mono);text-transform:uppercase;letter-spacing:.1em;font-size:11px;color:var(--muted);font-weight:600}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.stat{background:var(--paper);border-radius:14px;padding:12px 14px;box-shadow:var(--shadow);display:grid;gap:2px;min-width:0}
+.stat .v{font-family:var(--f-display);font-size:26px;line-height:1.1;font-variant-numeric:tabular-nums}
+.stat .l{font-size:12.5px;font-weight:700;color:var(--muted)}
+.stat:nth-child(1) .v{color:var(--mint-ink)}
+.stat:nth-child(2) .v{color:var(--accent)}
+.stat:nth-child(3) .v{color:var(--lilac-ink)}
+.stat:nth-child(4) .v{color:var(--butter-ink)}
+
+.chart-card{background:var(--paper);border-radius:14px;padding:14px;box-shadow:var(--shadow);display:grid;gap:8px}
+.chart-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
+.chart-head h3{margin:0;font-size:16px;font-weight:800}
+.chart-head span{font-size:12px;color:var(--muted);font-weight:700}
+svg{display:block;width:100%;height:auto;overflow:visible}
+.foot{text-align:center;font-family:var(--f-mono);font-size:11px;color:var(--muted);line-height:1.6}
+.foot button{background:none;border:0;text-decoration:underline;color:var(--muted);font-family:inherit;font-size:inherit;padding:4px}
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:50;width:100%;height:100%}
+@media (prefers-reduced-motion: reduce){.pop{animation:none}.dose{transition:none}}
+</style>
+
+</head>
+<body>
+<canvas id="confetti" aria-hidden="true"></canvas>
+<main class="wrap">
+
+  <section class="rx" aria-label="Prescription label">
+    <div class="rx-top"><span>Togetherness Pharmacy</span><span>Rx #0000LOVE</span></div>
+    <div class="rx-body">
+      <div class="rx-row" style="border-top:0;padding-top:0"><span>Patients</span><span>Filled <b id="filled"></b></span></div>
+      <h1 class="rx-name">Toltech &amp; Solarah</h1>
+      <div class="rx-drug">The Daily Dose of How Good We Are Together, 1000mg</div>
+      <div class="rx-sig">Take one dose daily, by mouth or by heart. Report results honestly. All results are positive.</div>
+      <div class="rx-row"><span>Side effects</span><span>Smiling, giggling, spontaneous hand-holding</span></div>
+      <div class="rx-row"><span>Refills</span><span>Unlimited, forever</span></div>
+      <div class="rx-row"><span>Streak</span><span><b id="streak">0 days</b> in a row</span></div>
+      <div class="rx-row"><span>Prescriber</span><span>Dr. The Universe, MD</span></div>
+      <div class="barcode" aria-hidden="true"></div>
+    </div>
+    <div class="warn"><b>!</b><span>May cause extreme togetherness. Do not operate heavy machinery while this cute.</span></div>
+  </section>
+
+  <section class="q">
+    <h2>How good are we together today?</h2>
+    <div class="doses" role="group" aria-label="Pick today's dose">
+      <button class="dose d1" data-level="0" id="btn-good"><span>Good</span></button>
+      <button class="dose d2" data-level="1" id="btn-really"><span>Really Good</span></button>
+      <button class="dose d3" data-level="2" id="btn-excellent"><span>Excellent</span></button>
+      <button class="dose d4" data-level="3" id="btn-amazing"><span>Amazing</span></button>
+    </div>
+    <small id="taken" class="taken">Today's dose hasn't been taken yet. Doctor's orders.</small>
+  </section>
+
+  <section class="result" id="result" aria-live="polite">
+    <div class="verdict" id="verdict">Pharmacist's note</div>
+    <div class="quip" id="quip">Pick a dose above. There are no wrong answers, only correct ones.</div>
+    <div class="compliment" id="compliment">Lab results pending, but early signs look extremely good together.</div>
+  </section>
+
+  <section style="display:grid;gap:10px">
+    <div class="sec-title">Official lab results</div>
+    <div class="stats">
+      <div class="stat"><div class="v">100%</div><div class="l">Odds we're good together</div></div>
+      <div class="stat"><div class="v" id="s-high">Today</div><div class="l">All-time high (again)</div></div>
+      <div class="stat"><div class="v" id="s-doses">0</div><div class="l">Doses taken</div></div>
+      <div class="stat"><div class="v">0</div><div class="l">Bad days on record</div></div>
+    </div>
+  </section>
+
+  <section class="chart-card">
+    <div class="chart-head"><h3>Togetherness Index</h3><span id="chart-note">Last 14 days</span></div>
+    <svg id="chart" viewBox="0 0 360 200" role="img" aria-label="Line chart of daily togetherness scores"></svg>
+  </section>
+
+  <footer class="foot">
+    Saved on this phone only. Keep out of reach of people who aren't us.<br>
+    <button id="reset" type="button">Reset history</button>
+    <span id="reset-confirm" hidden> Sure? <button id="reset-yes" type="button">Yes, start over</button> <button id="reset-no" type="button">No</button></span>
+  </footer>
+</main>
+
+<script>
+(() => {
+  const LEVELS = [
+    { name: "Good", score: 70, quips: [
+      "Good? That's just 'Amazing' being humble.",
+      "A 'Good' day for us is a great day for most couples.",
+      "Even our good days have good days.",
+      "Logged. Scientists say our Good is everyone else's Excellent."
+    ]},
+    { name: "Really Good", score: 82, quips: [
+      "Really good. Like, suspiciously good.",
+      "Two 'really's and you'd be bragging.",
+      "Confirmed. Neighbors have noticed.",
+      "That's a solid dose. Side effects may include more smiling."
+    ]},
+    { name: "Excellent", score: 92, quips: [
+      "Excellent! The lab had to buy a bigger chart.",
+      "Peer-reviewed and certified excellent.",
+      "This much excellence should require a prescription. Oh wait.",
+      "Excellent. Please hydrate, this is a lot of togetherness."
+    ]},
+    { name: "Amazing", score: 100, quips: [
+      "AMAZING. Maximum dose. The scale only goes this high.",
+      "Amazing! We broke the togetherness-o-meter. Again.",
+      "Officially amazing. Notifying the newspapers.",
+      "Amazing. Honestly, what did you expect from us?"
+    ]}
+  ];
+  const BEYOND = { name: "Beyond Amazing", score: 120, quips: [
+    "SECRET LEVEL UNLOCKED. The chart literally can't contain us.",
+    "You found the rare Beyond Amazing. Doctors are baffled.",
+    "Off the charts. That's not a figure of speech, look at the chart."
+  ]};
+  const COMPLIMENTS = [
+    "Solarah, you make every day the good kind.",
+    "Toltech + Solarah: a combo so strong it should be illegal.",
+    "Statistically, you two are the best two.",
+    "You laugh at the same stuff. That's basically a superpower.",
+    "Nobody does Tuesdays together like you two.",
+    "Your snack-sharing ratio is a model for the world.",
+    "Experts agree: you are each other's favorite person.",
+    "If teamwork were a sport, you'd have the trophies.",
+    "Even your bickering is cute. It's unfair, honestly.",
+    "You two make ordinary errands feel like a date.",
+    "The universe ran the numbers. You're a match.",
+    "Your inside jokes have inside jokes.",
+    "Solarah, Toltech thinks you're the coolest. Verified.",
+    "Toltech, Solarah thinks you're pretty great too. Probably.",
+    "So good together it's almost showing off."
+  ];
+
+  const KEY = "dose-history-v1";
+  const pick = a => a[Math.floor(Math.random() * a.length)];
+  const dayKey = d => { const x = new Date(d); return x.getFullYear()+"-"+String(x.getMonth()+1).padStart(2,"0")+"-"+String(x.getDate()).padStart(2,"0"); };
+  const today = () => dayKey(new Date());
+  const shift = (key, n) => { const [y,m,d] = key.split("-").map(Number); return dayKey(new Date(y, m-1, d+n)); };
+
+  let history = {};
+  try { history = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { history = {}; }
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(history)); } catch (e) {} };
+
+  const $ = id => document.getElementById(id);
+  $("filled").textContent = new Date().toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" });
+
+  function streak() {
+    let k = today(), n = 0;
+    if (!history[k]) k = shift(k, -1);
+    while (history[k]) { n++; k = shift(k, -1); }
+    return n;
+  }
+
+  function render() {
+    const s = streak();
+    $("streak").textContent = s + (s === 1 ? " day" : " days");
+    const days = Object.keys(history).length;
+    $("s-doses").textContent = days;
+    const t = history[today()];
+    $("taken").textContent = t ? "Today's dose: " + t.name + ". Tap again anytime for a booster." : "Today's dose hasn't been taken yet. Doctor's orders.";
+    $("s-high").textContent = days ? "Today" : "Soon";
+    drawChart();
+  }
+
+  function drawChart() {
+    const svg = $("chart");
+    const W = 360, H = 200, L = 46, R = 12, T = 18, B = 26;
+    const keys = []; for (let i = 13; i >= 0; i--) keys.push(shift(today(), -i));
+    const real = keys.some(k => history[k]);
+    const example = [72, 75, 74, 80, 82, 81, 86, 88, 87, 92, 93, 95, 98, 100];
+    const pts = keys.map((k, i) => ({ k, v: real ? (history[k] ? history[k].score : null) : example[i] }));
+    $("chart-note").textContent = real ? "Last 14 days" : "Example. Yours starts with today's dose.";
+    const yMin = 50, yMax = 120;
+    const x = i => L + (i * (W - L - R)) / 13;
+    const y = v => T + ((yMax - Math.min(v, yMax)) * (H - T - B)) / (yMax - yMin);
+    const ticks = [[70, "Good"], [82, "Really"], [92, "Excellent"], [100, "Amazing"]];
+    let g = "";
+    ticks.forEach(([v, lab]) => {
+      g += `<line x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}" stroke="var(--rule)" stroke-width="1"/>`;
+      g += `<text x="${L - 6}" y="${y(v) + 3.5}" text-anchor="end" font-size="9.5" font-family="IBM Plex Mono, monospace" fill="var(--muted)">${lab}</text>`;
+    });
+    g += `<line x1="${L}" x2="${W - R}" y1="${y(120)}" y2="${y(120)}" stroke="var(--accent)" stroke-dasharray="4 4" stroke-width="1"/>`;
+    g += `<text x="${W - R}" y="${y(120) - 5}" text-anchor="end" font-size="9.5" font-family="IBM Plex Mono, monospace" fill="var(--accent)">Off the charts</text>`;
+    [0, 13].forEach(i => {
+      const [, m, d] = keys[i].split("-").map(Number);
+      g += `<text x="${x(i)}" y="${H - 8}" text-anchor="${i ? "end" : "start"}" font-size="9.5" font-family="IBM Plex Mono, monospace" fill="var(--muted)">${i === 13 ? "Today" : m + "/" + d}</text>`;
+    });
+    const segs = []; let cur = [];
+    pts.forEach((p, i) => { if (p.v == null) { if (cur.length) segs.push(cur); cur = []; } else cur.push([x(i), y(p.v)]); });
+    if (cur.length) segs.push(cur);
+    const line = real ? "var(--accent)" : "var(--muted)";
+    segs.forEach(sg => {
+      if (sg.length > 1) {
+        const d = sg.map((p, i) => (i ? "L" : "M") + p[0].toFixed(1) + " " + p[1].toFixed(1)).join(" ");
+        g += `<path d="${d} L${sg[sg.length - 1][0].toFixed(1)} ${H - B} L${sg[0][0].toFixed(1)} ${H - B} Z" fill="${line}" opacity="0.12"/>`;
+        g += `<path d="${d}" fill="none" stroke="${line}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" ${real ? "" : 'stroke-dasharray="5 5"'}/>`;
+      }
+    });
+    pts.forEach((p, i) => {
+      if (p.v == null) return;
+      const isToday = i === 13 && real;
+      g += `<circle cx="${x(i)}" cy="${y(p.v)}" r="${isToday ? 5.5 : 3.5}" fill="${isToday ? "var(--accent)" : "var(--paper)"}" stroke="${line}" stroke-width="2"/>`;
+      if (real && p.v > 100) g += `<text x="${x(i)}" y="${y(p.v) - 9}" text-anchor="middle" font-size="12" fill="var(--accent)">★</text>`;
+    });
+    svg.innerHTML = g;
+  }
+
+  function dose(level) {
+    let lv = LEVELS[level];
+    const beyond = Math.random() < 1 / 12;
+    if (beyond) lv = BEYOND;
+    const k = today();
+    const prev = history[k];
+    if (!prev || lv.score >= prev.score) history[k] = { name: lv.name, score: lv.score };
+    save();
+    const card = $("result");
+    card.classList.toggle("beyond", beyond);
+    $("verdict").textContent = beyond ? "✨ Beyond Amazing ✨" : lv.name + "!";
+    $("quip").textContent = pick(lv.quips);
+    $("compliment").textContent = pick(COMPLIMENTS);
+    card.classList.remove("pop"); void card.offsetWidth; card.classList.add("pop");
+    confetti(beyond ? 220 : 60 + level * 30);
+    render();
+  }
+
+  document.querySelectorAll(".dose").forEach(b => b.addEventListener("click", () => dose(+b.dataset.level)));
+
+  $("reset").addEventListener("click", () => { $("reset-confirm").hidden = false; });
+  $("reset-no").addEventListener("click", () => { $("reset-confirm").hidden = true; });
+  $("reset-yes").addEventListener("click", () => { history = {}; save(); $("reset-confirm").hidden = true; render(); });
+
+  // Confetti: little hearts and pills
+  const cv = $("confetti"), cx = cv.getContext("2d");
+  let parts = [], raf = 0;
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function size() { cv.width = innerWidth * devicePixelRatio; cv.height = innerHeight * devicePixelRatio; }
+  addEventListener("resize", size); size();
+  function confetti(n) {
+    if (reduce) return;
+    const cs = getComputedStyle(document.documentElement);
+    const cols = ["--pink", "--mint", "--lilac", "--butter", "--accent", "--warn"].map(c => cs.getPropertyValue(c).trim());
+    for (let i = 0; i < n; i++) parts.push({
+      x: innerWidth / 2 + (Math.random() - .5) * 80, y: innerHeight * .45,
+      vx: (Math.random() - .5) * 14, vy: -Math.random() * 14 - 4,
+      r: Math.random() * Math.PI, vr: (Math.random() - .5) * .3,
+      s: 6 + Math.random() * 7, c: pick(cols), heart: Math.random() < .45, life: 0
+    });
+    if (!raf) raf = requestAnimationFrame(tick);
+  }
+  function heart(s) { cx.beginPath(); cx.moveTo(0, s * .3); cx.bezierCurveTo(-s, -s * .4, -s * .4, -s, 0, -s * .35); cx.bezierCurveTo(s * .4, -s, s, -s * .4, 0, s * .3); cx.fill(); }
+  function tick() {
+    cx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+    cx.clearRect(0, 0, innerWidth, innerHeight);
+    parts = parts.filter(p => p.y < innerHeight + 30 && p.life < 240);
+    parts.forEach(p => {
+      p.vy += .32; p.vx *= .99; p.x += p.vx; p.y += p.vy; p.r += p.vr; p.life++;
+      cx.save(); cx.translate(p.x, p.y); cx.rotate(p.r); cx.fillStyle = p.c;
+      if (p.heart) heart(p.s); else { cx.beginPath(); cx.roundRect ? cx.roundRect(-p.s, -p.s / 2.6, p.s * 2, p.s / 1.3, p.s / 2.6) : cx.rect(-p.s, -p.s / 2.6, p.s * 2, p.s / 1.3); cx.fill(); }
+      cx.restore();
+    });
+    raf = parts.length ? requestAnimationFrame(tick) : 0;
+    if (!raf) cx.clearRect(0, 0, innerWidth, innerHeight);
+  }
+
+  render();
+})();
+</script>
+
+</body>
+</html>
